@@ -1,0 +1,8 @@
+/* components/PriceCard.module.css */
+.card {
+  /* Example styles */
+  background-color: #f9f9f9;
+  border: 1px solid #e5e5e5;
+  padding: 1rem;
+  border-radius: 0.5rem;
+}
