@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "name": "Bananas (1kg)",
+    "category": "produce",
+    "woolworths": 4.9,
+    "coles": 4.8,
+    "aldi": 4.5,
+    "iga": 5.2,
+    "bestPrice": "Aldi",
+    "trend": "rising",
+    "priceChange": 8.2
+  }
+]

@@ -1,0 +1,1 @@
+// Table component from shadcn/ui

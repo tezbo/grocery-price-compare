@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "Free Range Eggs (12 pack)",
+    "category": "dairy",
+    "woolworths": 7.5,
+    "coles": 7.9,
+    "aldi": 7.2,
+    "iga": 7.95,
+    "bestPrice": "Aldi",
+    "trend": "rising",
+    "priceChange": 12.5
+  },
+  {
+    "id": 2,
+    "name": "Full Cream Milk (2L)",
+    "category": "dairy",
+    "woolworths": 3.6,
+    "coles": 3.5,
+    "aldi": 3.45,
+    "iga": 3.8,
+    "bestPrice": "Aldi",
+    "trend": "stable",
+    "priceChange": 0
+  }
+]
