@@ -1,13 +1,11 @@
-// frontend/app/compare/page.js
 'use client';
-
 import { useEffect, useState } from 'react';
-import { ArrowDownIcon, ArrowUpIcon, TrendingUp, TrendingDown } from 'lucide-react';
-import { Badge } from '../../components/ui/Badge';
 
 export default function ComparePage() {
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState('');
+  const [recipeUrl, setRecipeUrl] = useState('');
+  const [recipeData, setRecipeData] = useState(null);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -22,52 +20,70 @@ export default function ComparePage() {
     fetchProducts();
   }, []);
 
-const [recipeUrl, setRecipeUrl] = useState('');
-  
-const [recipeData, setRecipeData] = useState(null);
-
-const handleScrapeRecipe = async () => {
-//   try {
-//     const res = await fetch(`http://localhost:8000/scrape_recipe/?url=${recipeUrl}`);
-//     const data = await res.json();
-//     setRecipeData(data);
-//   } catch (error) {
-//     console.error("Failed to scrape recipe:", error);
-//   }
-};
-
-
+  const handleScrapeRecipe = async () => {
+    try {
+      const res = await fetch(`http://localhost:8000/api/scrape_recipe/?url=${recipeUrl}`);
+      const data = await res.json();
+      setRecipeData(data);
+    } catch (error) {
+      console.error("Failed to scrape recipe:", error);
+    }
+  };
 
   const filteredProducts = products.filter((product) =>
     product.name.toLowerCase().includes(search.toLowerCase())
   );
 
+  const getProductPrice = (ingredient) => {
+    const product = products.find((product) =>
+      ingredient.toLowerCase().includes(product.name.toLowerCase())
+    );
+    return product ? product.price : 'N/A';
+  };
+
   return (
     <div className="max-w-6xl mx-auto px-4 py-10">
       <h1 className="text-3xl font-bold mb-6">Price Comparison</h1>
-
       <div>
-    <input 
-      type="text" 
-      placeholder="Enter recipe URL" 
-      value={recipeUrl}
-      onChange={(e) => setRecipeUrl(e.target.value)} 
-      className="input-field"
-    />
-    <button onClick={handleScrapeRecipe}>Scrape Recipe</button>
+        <input 
+          type="text" 
+          placeholder="Enter recipe URL" 
+          value={recipeUrl}
+          onChange={(e) => setRecipeUrl(e.target.value)} 
+          className="input-field"
+        />
+        <button onClick={handleScrapeRecipe}>Scrape Recipe</button>
 
-    {recipeData && (
-      <div>
-        <h2>{recipeData.title}</h2>
-        <ul>
-          {recipeData.ingredients.map((ingredient, index) => (
-            <li key={index}>{ingredient}</li>
-          ))}
-        </ul>
+        {recipeData && recipeData.ingredients && (
+          <div>
+            <h2 className="text-2xl font-bold mt-6 mb-4">{recipeData.title}</h2>
+            <table className="min-w-full bg-white border border-gray-300">
+              <thead>
+                <tr>
+                  <th className="py-2 px-4 border-b">Quantity</th>
+                  <th className="py-2 px-4 border-b">Ingredient</th>
+                  <th className="py-2 px-4 border-b">Price</th>
+                </tr>
+              </thead>
+              <tbody>
+                {recipeData.ingredients.map((ingredient, index) => {
+                  const [quantity, ...nameParts] = ingredient.split(' ');
+                  const name = nameParts.join(' ');
+                  const price = getProductPrice(name);
+                  return (
+                    <tr key={index}>
+                      <td className="py-2 px-4 border-b">{quantity}</td>
+                      <td className="py-2 px-4 border-b">{name}</td>
+                      <td className="py-2 px-4 border-b">{price}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
-    )}
-  </div>
-  
+
       <input
         type="text"
         placeholder="Search products..."
@@ -76,65 +92,22 @@ const handleScrapeRecipe = async () => {
         onChange={(e) => setSearch(e.target.value)}
       />
 
-      <div className="overflow-x-auto rounded-md border">
-      <div className="overflow-x-auto rounded-md border border-gray-200">
-      <table className="min-w-full text-sm text-left">
-        <thead className="bg-gray-100">
+      <table className="min-w-full bg-white border border-gray-300">
+        <thead>
           <tr>
-            <th className="p-3 font-semibold">Product</th>
-            <th className="p-3 font-semibold">Woolworths</th>
-            <th className="p-3 font-semibold">Coles</th>
-            <th className="p-3 font-semibold">Aldi</th>
-            <th className="p-3 font-semibold">IGA</th>
-            <th className="p-3 font-semibold">Best Price</th>
-            <th className="p-3 font-semibold">Trend</th>
+            <th className="py-2 px-4 border-b">Product Name</th>
+            <th className="py-2 px-4 border-b">Price</th>
           </tr>
         </thead>
         <tbody>
           {filteredProducts.map((product, index) => (
-            <tr key={index} className="border-t hover:bg-gray-50 transition-colors">
-              <td className="p-3">
-                {product.trend === 'rising' && (
-                  <TrendingUp className="w-4 h-4 inline-block mr-1 text-red-500" />
-                )}
-                {product.trend === 'falling' && (
-                  <TrendingDown className="w-4 h-4 inline-block mr-1 text-green-500" />
-                )}
-                {product.name}
-              </td>
-              <td className="p-3">${product.woolworths?.toFixed(2) ?? '—'}</td>
-              <td className="p-3">${product.coles?.toFixed(2) ?? '—'}</td>
-              <td className="p-3">${product.aldi?.toFixed(2) ?? '—'}</td>
-              <td className="p-3">${product.iga?.toFixed(2) ?? '—'}</td>
-              <td className="p-3">
-                <Badge>{product.bestPrice}</Badge>
-              </td>
-              <td className="p-3 flex items-center gap-1">
-                {product.priceChange > 0 && (
-                  <ArrowUpIcon className="w-3 h-3 text-red-500" />
-                )}
-                {product.priceChange < 0 && (
-                  <ArrowDownIcon className="w-3 h-3 text-green-500" />
-                )}
-                <span
-                  className={
-                    product.priceChange > 0
-                      ? 'text-red-500'
-                      : product.priceChange < 0
-                      ? 'text-green-500'
-                      : 'text-gray-500'
-                  }
-                >
-                  {product.priceChange > 0 ? '+' : ''}
-                  {product.priceChange ?? 0}%
-                </span>
-              </td>
+            <tr key={index}>
+              <td className="py-2 px-4 border-b">{product.name}</td>
+              <td className="py-2 px-4 border-b">{product.price}</td>
             </tr>
           ))}
         </tbody>
       </table>
-</div>
-      </div>
     </div>
   );
 }
