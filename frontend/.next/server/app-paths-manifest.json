@@ -1,3 +1,4 @@
 {
-  "/compare/page": "app/compare/page.js"
+  "/compare/page": "app/compare/page.js",
+  "/page": "app/page.js"
 }
