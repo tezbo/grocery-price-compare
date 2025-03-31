@@ -1,1 +1,73 @@
-[]
+[
+  {
+    "title": "HOKKIEN NOODLES",
+    "ingredients": [
+      {
+        "quantity": "1/2",
+        "unit": "cup",
+        "name": "your choice of sliced chicken or pork",
+        "notes": ""
+      },
+      {
+        "quantity": "200 g / 7 oz",
+        "unit": "",
+        "name": "Hokkien noodles",
+        "notes": ""
+      },
+      {
+        "quantity": "1 1/2",
+        "unit": "cups",
+        "name": "Chinese cabbage",
+        "notes": ", shredded"
+      },
+      {
+        "quantity": "1",
+        "unit": "cup",
+        "name": "bean sprouts",
+        "notes": ""
+      },
+      {
+        "quantity": "1",
+        "unit": "cup",
+        "name": "broccoli florets",
+        "notes": ""
+      },
+      {
+        "quantity": "1",
+        "unit": "cup",
+        "name": "shredded carrot",
+        "notes": ""
+      },
+      {
+        "quantity": "2",
+        "unit": "",
+        "name": "shallot/scallion stems",
+        "notes": ", cut into 4cm/2\u2033 slices"
+      },
+      {
+        "quantity": "2",
+        "unit": "tbsp",
+        "name": "oil",
+        "notes": ""
+      },
+      {
+        "quantity": "1/4",
+        "unit": "cup",
+        "name": "Real Chinese All Purpose Stir Fry Sauce",
+        "notes": ""
+      },
+      {
+        "quantity": "1",
+        "unit": "cup",
+        "name": "water",
+        "notes": ""
+      },
+      {
+        "quantity": "",
+        "unit": "",
+        "name": "White pepper to taste",
+        "notes": ""
+      }
+    ]
+  }
+]

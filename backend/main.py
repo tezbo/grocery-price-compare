@@ -1,10 +1,6 @@
 from fastapi import FastAPI
-from app.routers import products
-from app.routers.recipes import router as recipes_router
 from fastapi.middleware.cors import CORSMiddleware
-import logging
-
-logging.basicConfig(level=logging.INFO)
+from app.routers import recipes, products, scraper
 
 app = FastAPI()
 
@@ -16,7 +12,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Include routers
 app.include_router(products.router, prefix="/api")
-app.include_router(recipes_router, prefix="/api")
-
-logging.info("Routers included: /api/products, /api/recipes")
+app.include_router(recipes.router, prefix="/api")
+app.include_router(scraper.router, prefix="/api")

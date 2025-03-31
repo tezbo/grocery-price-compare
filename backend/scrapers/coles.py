@@ -1,1 +1,0 @@
-# Coles scraper logic
